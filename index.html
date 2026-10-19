@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="GarageFlow helps independent garages in Ireland keep repair jobs moving.">
+<title>GarageFlow | A clearer view of every repair</title>
+<style>
+:root {
+  --navy:#092637; --teal:#078d78; --green:#25d9a0;
+  --ink:#112b3c; --muted:#526878; --mint:#e8f8f3;
+  --paper:#f5f8fa; --white:#fff; --line:#dce7ec;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0; color:var(--ink); background:white;
+  font-family:Arial,Helvetica,sans-serif; line-height:1.6;
+}
+a { color:inherit; }
+.container { width:min(1160px,calc(100% - 36px)); margin:auto; }
+.topbar { background:var(--navy); color:white; }
+.nav {
+  min-height:72px; display:flex; align-items:center;
+  justify-content:space-between; gap:20px;
+}
+.brand { font-size:1.4rem; font-weight:900; text-decoration:none; }
+.brand span { color:var(--green); }
+.navlinks { display:flex; align-items:center; gap:18px; }
+.navlinks a { color:white; text-decoration:none; font-size:.88rem; font-weight:bold; }
+.btn {
+  display:inline-block; padding:13px 19px; border:0;
+  border-radius:9px; background:var(--teal); color:white;
+  text-decoration:none; font-weight:bold; cursor:pointer;
+}
+.btn:hover { filter:brightness(1.08); }
+.btn-green { background:var(--green); color:var(--navy)!important; }
+.btn-outline { background:white; color:var(--navy)!important; border:1px solid #9aafb9; }
+.hero {
+  background:linear-gradient(120deg,#f5fbfc,#e0f4ee);
+  overflow:hidden;
+}
+.hero-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:35px;
+  align-items:center; padding-top:55px; padding-bottom:55px;
+}
+.eyebrow {
+  color:var(--teal); font-size:.78rem; font-weight:900;
+  letter-spacing:.12em; text-transform:uppercase;
+}
+h1 { font-size:clamp(2.5rem,5vw,4rem); line-height:1.04; letter-spacing:-.05em; margin:15px 0; }
+.accent { color:var(--teal); }
+.lead { font-size:1.12rem; color:#344f60; }
+.actions { display:flex; flex-wrap:wrap; gap:10px; margin:24px 0; }
+.proof { display:flex; flex-wrap:wrap; gap:10px 16px; font-size:.8rem; font-weight:bold; }
+.check { color:var(--teal); font-weight:900; }
+.visual {
+  position:relative; padding:22px 12px; border-radius:24px;
+  background:linear-gradient(135deg,#c4e4e1,#eff8f7);
+}
+.workshop-photo {
+  width:100%; height:180px; object-fit:cover; border-radius:16px;
+  margin-bottom:12px;
+}
+.dashboard {
+  position:relative; background:white; border:5px solid #123344;
+  border-radius:15px; overflow:hidden; box-shadow:0 20px 45px #09263733;
+}
+.dash-top {
+  background:var(--navy); color:white; padding:12px 14px;
+  display:flex; justify-content:space-between; font-weight:bold;
+}
+.dash-top strong { color:var(--green); }
+.dash-body { padding:12px; }
+.dash-title { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.dash-title strong { font-size:1.1rem; }
+.mini-button { background:var(--teal); color:white; padding:5px 8px; border-radius:5px; font-size:.7rem; }
+.tabs { display:flex; flex-wrap:wrap; gap:5px; margin:12px 0; }
+.tab { background:#edf3f5; color:#526878; border-radius:5px; padding:4px 7px; font-size:.65rem; }
+.tab.active { background:#d9f7ed; color:#087967; }
+.job {
+  display:grid; grid-template-columns:1.3fr 1fr .4fr; gap:6px;
+  padding:9px 2px; border-top:1px solid #e6edf0; align-items:center;
+  font-size:.67rem;
+}
+.job.head { color:#607683; font-weight:bold; font-size:.62rem; }
+.status { background:#e1f3ff; color:#216b92; border-radius:4px; padding:3px 5px; }
+.status.wait { background:#fff0d9; color:#a35a05; }
+.status.ready { background:#d9f7e5; color:#187445; }
+.phone {
+  position:absolute; width:105px; right:-4px; bottom:-15px;
+  background:white; border:5px solid #102b3b; border-radius:20px;
+  box-shadow:0 15px 30px #09263733; padding:5px;
+}
+.phone-top { background:var(--navy); color:white; border-radius:12px 12px 0 0; padding:8px 5px; font-size:.6rem; font-weight:bold; }
+.phone-inner { background:#f3f8f9; padding:8px; font-size:.59rem; }
+.car { background:#dbe8eb; border-radius:6px; text-align:center; padding:12px 0; font-size:1.3rem; }
+.field { margin:6px 0; padding:5px; background:white; border:1px solid #d3e0e5; border-radius:4px; color:#6b7e88; }
+.phone-button { background:var(--teal); color:white; text-align:center; padding:5px; border-radius:4px; }
+.section { padding:70px 0; }
+.muted { background:var(--paper); }
+.section-head { max-width:700px; margin:0 auto 32px; text-align:center; }
+h2 { font-size:clamp(1.8rem,3vw,2.6rem); line-height:1.15; letter-spacing:-.04em; margin:9px 0 12px; }
+.section-head p, .muted-text { color:var(--muted); }
+.problem-grid { display:grid; grid-template-columns:1fr 1fr; gap:38px; align-items:center; }
+.problem-img { width:100%; aspect-ratio:1.4; object-fit:cover; border-radius:18px; }
+.quote {
+  position:relative; margin:-24px 12px 0; padding:18px;
+  background:white; border-radius:12px; box-shadow:0 12px 30px #09263720;
+  font-weight:bold;
+}
+.quote:before { content:"“"; color:var(--teal); font-size:2rem; }
+.point { display:flex; gap:10px; margin-top:14px; }
+.point strong { display:block; }
+.point small { color:var(--muted); }
+.steps { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.step {
+  padding:24px; background:white; border:1px solid var(--line);
+  border-radius:16px;
+}
+.number {
+  display:grid; place-items:center; width:42px; height:42px;
+  background:var(--mint); color:var(--teal); border-radius:12px; font-weight:900;
+}
+.step .icon { font-size:1.8rem; margin-top:15px; }
+.step h3 { margin:8px 0; }
+.step p { color:var(--muted); font-size:.93rem; margin-bottom:0; }
+.feature-band { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.panel { padding:28px; border-radius:18px; }
+.price-panel { background:linear-gradient(135deg,#078d78,#075e5a); color:white; }
+.price-panel .eyebrow { color:#c8fff0; }
+.price { font-size:clamp(1.8rem,3vw,2.5rem); font-weight:900; line-height:1.15; }
+.price-panel p { color:#e3fff7; font-size:.92rem; }
+.demo-panel { background:linear-gradient(120deg,#f0f7fa,#e6f3f3); }
+.demo-panel p { color:var(--muted); }
+.waitlist {
+  background:linear-gradient(110deg,#061d2b,#123d4a); color:white;
+}
+.wait-grid { display:grid; grid-template-columns:1fr 1fr; gap:38px; align-items:center; }
+.waitlist p { color:#c9dce4; }
+label { display:block; margin-bottom:7px; font-weight:bold; }
+.form-row { display:flex; gap:8px; }
+input[type=email] {
+  min-width:0; flex:1; padding:13px; border:1px solid #9aafb9;
+  border-radius:8px; font:inherit;
+}
+.form-note { font-size:.78rem; }
+#thanks { display:none; background:#c9ffeb; color:#063a32; padding:13px; border-radius:9px; font-weight:bold; }
+footer { background:#041a27; color:#d8e7ec; padding:22px 0; font-size:.85rem; }
+.footer { display:flex; align-items:center; justify-content:space-between; gap:15px; }
+footer a { color:var(--green); font-weight:bold; }
+@media(max-width:800px) {
+  .navlinks a:not(.btn) { display:none; }
+  .hero-grid { grid-template-columns:1fr; }
+  .visual { max-width:620px; width:100%; margin:auto; }
+  .problem-grid { grid-template-columns:1fr; }
+  .feature-band, .wait-grid { grid-template-columns:1fr; }
+}
+@media(max-width:560px) {
+  .container { width:calc(100% - 28px); }
+  .nav { min-height:65px; gap:8px; }
+  .brand { font-size:1.15rem; }
+  .navlinks { gap:6px; }
+  .navlinks .btn { padding:9px; font-size:.72rem; }
+  .hero-grid { padding-top:36px; padding-bottom:35px; gap:20px; }
+  h1 { font-size:2.55rem; }
+  .lead { font-size:1rem; }
+  .actions { display:grid; }
+  .proof { display:grid; gap:7px; }
+  .visual { padding:10px 7px; }
+  .workshop-photo { height:120px; }
+  .dashboard { border-width:4px; }
+  .dash-body { padding:8px; }
+  .job { font-size:.55rem; }
+  .job.head { font-size:.52rem; }
+  .tab { font-size:.53rem; padding:4px; }
+  .phone { width:84px; right:-3px; bottom:-8px; }
+  .phone-top { font-size:.5rem; }
+  .phone-inner { font-size:.5rem; padding:5px; }
+  .section { padding:48px 0; }
+  .steps { grid-template-columns:1fr; }
+  .step { display:grid; grid-template-columns:44px 1fr; gap:0 12px; padding:18px; }
+  .number { grid-row:span 2; }
+  .step .icon { display:none; }
+  .step h3 { margin:0 0 4px; }
+  .step p { grid-column:2; }
+  .panel { padding:22px; }
+  .form-row { flex-direction:column; }
+  .footer { align-items:flex-start; flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="#top">↗ Garage<span>Flow</span></a>
+    <nav class="navlinks" aria-label="Main navigation">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a class="btn" href="https://caitlinsimpson.github.io/kehoes-garage-demo/" target="_blank" rel="noopener">Try the demo</a>
+      <a class="btn btn-green" href="#waiting">Join the waiting list</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">For independent garages in Ireland</div>
+      <h1>Keep repairs moving <span class="accent">without pulling mechanics off the tools.</span></h1>
+      <p class="lead">A mobile-friendly job tracker designed for smaller garages with busy workshops and small office teams.</p>
+      <div class="actions">
+        <a class="btn" href="https://caitlinsimpson.github.io/kehoes-garage-demo/" target="_blank" rel="noopener">Try the demo →</a>
+        <a class="btn btn-outline" href="#waiting">Join the waiting list</a>
+      </div>
+      <div class="proof">
+        <span><i class="check">✓</i> Built for independent garages</span>
+        <span><i class="check">✓</i> Workshop and office views</span>
+        <span><i class="check">✓</i> Designed for phones and computers</span>
+      </div>
+    </div>
+
+    <div class="visual" aria-label="Illustration of GarageFlow on a dashboard and phone">
+      <img class="workshop-photo" src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1200&q=85" alt="Car in a workshop" onerror="this.style.display='none'">
+      <div class="dashboard">
+        <div class="dash-top"><span>↗ <strong>GarageFlow</strong></span><span>Workshop view</span></div>
+        <div class="dash-body">
+          <div class="dash-title"><strong>Workshop</strong><span class="mini-button">＋ New job</span></div>
+          <div class="tabs"><span class="tab active">All (9)</span><span class="tab">In progress</span><span class="tab">Waiting for parts</span><span class="tab">Ready</span></div>
+          <div class="job head"><span>Vehicle</span><span>Stage</span><span>Days</span></div>
+          <div class="job"><strong>🚘 Toyota Corolla</strong><span class="status">In progress</span><span>0</span></div>
+          <div class="job"><strong>🚙 Ford Focus</strong><span class="status wait">Waiting parts</span><span>3</span></div>
+          <div class="job"><strong>🚗 VW Golf</strong><span class="status">Diagnostics</span><span>1</span></div>
+          <div class="job"><strong>🚘 Hyundai Tucson</strong><span class="status">In progress</span><span>1</span></div>
+          <div class="job"><strong>🚙 BMW 3 Series</strong><span class="status ready">Ready</span><span>0</span></div>
+        </div>
+      </div>
+      <div class="phone">
+        <div class="phone-top">↗ GarageFlow</div>
+        <div class="phone-inner">
+          <div class="car">🚘</div>
+          <strong>Check repair status</strong>
+          <div class="field">Job number</div>
+          <div class="field">Registration</div>
+          <div class="phone-button">View update</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="container problem-grid">
+    <div>
+      <img class="problem-img" src="https://images.unsplash.com/photo-1632823471565-1ecdf5c7c9a8?auto=format&fit=crop&w=1000&q=85" alt="Vehicle in a garage workshop" loading="lazy" onerror="this.style.display='none'">
+      <div class="quote">When reception is busy, we end up pulling mechanics off repairs to answer calls. Cars waiting for parts can sit for days without an update.</div>
+    </div>
+    <div>
+      <div class="eyebrow">The problem</div>
+      <h2>Sound familiar?</h2>
+      <p class="muted-text">When repair information is difficult to find, staff can lose time checking progress and responding to customer enquiries.</p>
+      <p class="muted-text">GarageFlow brings job stages into one simple view, so your team can see what is happening and focus on the work that matters.</p>
+      <div class="point"><span class="check">✓</span><div><strong>See repair stages in one place</strong><small>Office staff can view each job's current stage.</small></div></div>
+      <div class="point"><span class="check">✓</span><div><strong>Spot jobs waiting for parts</strong><small>Highlight jobs waiting for parts for more than two days.</small></div></div>
+      <div class="point"><span class="check">✓</span><div><strong>Offer a customer lookup</strong><small>Check sample job progress with a job number and registration.</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section muted" id="how">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">How it works</div>
+      <h2>Get started in three simple steps</h2>
+      <p>A straightforward way to share repair progress between the workshop, office and customer.</p>
+    </div>
+    <div class="steps">
+      <article class="step"><div class="number">01</div><div class="icon">🚘</div><h3>Update the job</h3><p>Workshop staff move a car through its repair stages, from booked in to ready to collect.</p></article>
+      <article class="step"><div class="number">02</div><div class="icon">📋</div><h3>See what needs attention</h3><p>Office staff view jobs by stage and spot cars waiting for parts for more than two days.</p></article>
+      <article class="step"><div class="number">03</div><div class="icon">📱</div><h3>Check customer progress</h3><p>Customers can look up a job using its job number and vehicle registration in the demo.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="container feature-band">
+    <div class="panel price-panel">
+      <div class="eyebrow">Simple, transparent pricing</div>
+      <div class="price">€99 setup<br>+ €49/month</div>
+      <p>Proposed price per garage. The setup fee could cover initial configuration and onboarding. This is an assumption to test with garage owners, not a confirmed offer.</p>
+    </div>
+    <div class="panel demo-panel">
+      <div class="eyebrow">Try it yourself</div>
+      <h2>Explore the demo</h2>
+      <p>Use fictional sample records to try the Workshop, Office and Customer views. This is an early prototype, not a live garage service.</p>
+      <a class="btn" href="https://caitlinsimpson.github.io/kehoes-garage-demo/" target="_blank" rel="noopener">Try the demo →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section waitlist" id="waiting">
+  <div class="container wait-grid">
+    <div>
+      <div class="eyebrow">Help shape a better workflow</div>
+      <h2>Interested in trying GarageFlow?</h2>
+      <p>Register your interest in the concept for independent garages. This prototype form only shows a confirmation and does not submit your details.</p>
+    </div>
+    <div>
+      <form id="waitlist-form">
+        <label for="email">Your email address</label>
+        <div class="form-row">
+          <input id="email" name="email" type="email" placeholder="you@example.com" required>
+          <button class="btn btn-green" type="submit">Register my interest</button>
+        </div>
+      </form>
+      <p id="thanks" role="status" aria-live="polite">Thank you for your interest in GarageFlow! This demo form does not send or save your details.</p>
+      <p class="form-note">Demo only · No information is sent or stored.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container footer">
+    <div class="brand">↗ Garage<span>Flow</span></div>
+    <a href="notes.html">Behind the build</a>
+    <div>A prototype concept for independent garages in Ireland.</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById("waitlist-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  document.getElementById("thanks").style.display = "block";
+  this.reset();
+});
+</script>
+</body>
+</html>
